@@ -1,0 +1,75 @@
+service: star-wars-api
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  environment:
+    SWAPI_URL: ${self:custom.swapiUrl}
+    CHARACTER_TABLE: ${self:custom.characterTableName}
+    AWS_ACCES_KEY: key_from_aws
+    AWS_SECRET_ACCESS_KEY: secret_key_from_aws
+
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-dynamodb
+  - serverless-dotenv-plugin
+
+package:
+  individually: true
+  patterns:
+    - "!*/**"
+
+custom:
+  dynamodb:
+  # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+  swapiUrl: https://swapi.py4e.com/api/people/?format=json
+  characterTableName: characterTable
+
+functions:
+  getCharacter:
+    handler: events/getCharacters/handler.getCharacters
+    events:
+      - http:
+          path: /get-characters
+          method: GET
+  getCharacterSwapi:
+    handler: events/getPersonSwapi/handler.getSwapiCharacters
+    events:
+      - http:
+          path: /get-swapi-characters
+          method: GET             
+  createCharacter:
+    handler: events/createCharacter/handler.setCharacter
+    events:
+      - http:
+          path: /create-character
+          method: POST
+          request:
+            schemas:
+             application/json: ${file(schema/character-schema.json)}
+
+resources:
+  Resources:
+    personajesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: characterTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

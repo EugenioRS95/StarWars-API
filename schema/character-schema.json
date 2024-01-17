@@ -1,0 +1,83 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Character",
+    "type": "object",
+    "properties": {
+        "nombre:": {
+            "type": "string",
+            "description": "Nombre del personaje"
+        },
+        "altura": {
+            "type": "number",
+            "description": "Altura del personaje"
+        },
+        "peso": {
+            "type": "number",
+            "description": "Peso del personaje"
+        },
+        "colorCabello": {
+            "type": "string",
+            "description": "Color de cabello del personaje"
+        },
+        "colorPiel": {
+            "type": "string",
+            "description": "Color de piel del personaje"
+        },
+        "colorOjos": {
+            "type": "string",
+            "description": "Color de ojos del personaje"
+        },
+        "nacimiento": {
+            "type": "string",
+            "description": "Año de nacimiento del personaje"
+        },
+        "genero": {
+            "type": "string",
+            "description": "Genero del personaje"
+        },
+        "mundoNatal": {
+            "type": "string",
+            "description": "Mundo natal del personaje"
+        },
+        "peliculas": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Enlaces de las peliculas en las que aparece el personaje"
+            }
+        },
+        "especies": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Enlaces de las especies a las que pertenece el personaje"
+            }
+        },
+        "vehiculos": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Enlaces de los vehiculos que utiliza el personaje"
+            }
+        },
+        "navesEstelares": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Enlaces de las naves estelares que usa el personaje"
+            }
+        },
+        "creado": {
+            "type": "string",
+            "description": "Fecha de creacion del personaje en SWAPI"
+        },
+        "editado": {
+            "type": "string",
+            "description": "Fecha de edición del personaje en swapi"
+        },
+        "url": {
+            "type":"string",
+            "description": "Enlace de detalles del personaje en swapi"
+        }
+    }
+  }
